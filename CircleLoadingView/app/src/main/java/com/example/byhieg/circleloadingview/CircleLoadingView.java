@@ -82,18 +82,18 @@ public class CircleLoadingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        float wdistance = (float)(wlength * 0.3);
-        float hdistance = (float)(hlength * 0.3);
+        float wdistance = (float)(wlength * 0.6);
+        float hdistance = (float)(hlength * 0.6);
 
         RectF rectF = new RectF(
-                wlength / 2 - wdistance,
-                hlength / 2 - hdistance,
-                wlength / 2 + wdistance,
-                hlength / 2 + hdistance);
+                wlength / 2 - wdistance / 2,
+                hlength / 2 - hdistance / 2,
+                wlength / 2 + wdistance / 2,
+                hlength / 2 + hdistance / 2);
         canvas.drawArc(
                 rectF,
                 270 + 5 * i,
-                (float)(66 * 3.6),
+                (float)(240),
                 false,
                 paint
         );
