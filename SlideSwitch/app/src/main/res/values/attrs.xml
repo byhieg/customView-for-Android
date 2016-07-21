@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="slide">
+        <attr name="barIcon" format="reference" />
+        <attr name="text" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="bgLeft" format="color" />
+        <attr name="bgRight" format="color" />
+    </declare-styleable>
+</resources>
