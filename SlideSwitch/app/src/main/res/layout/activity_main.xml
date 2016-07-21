@@ -19,7 +19,7 @@
         slide:barIcon="@drawable/icon_slide"
         slide:bgLeft="#ff0000"
         slide:bgRight="#222244"
-        slide:text=">>立即抢购"
+        slide:text=">>来互相伤害啊"
         slide:textColor="#ffffff"
         slide:textSize="22sp"/>
 
