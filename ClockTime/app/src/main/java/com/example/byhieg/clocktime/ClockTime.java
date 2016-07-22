@@ -182,40 +182,28 @@ public class ClockTime extends View{
                 (float)(hlength / 2 - 0.2 * outd),
                 linePaint);
         if (getEndx() == 0.0 && getEndy() == 0.0) {
-            drawLine(
-                    canvas,
-                    false,
+            canvas.drawLine(
+                    wlength / 2,
+                    hlength /2 ,
                     wlength / 2 + outd  / 2 - 100,
-                    hlength / 2);
+                    hlength / 2,
+                    linePaint);
         }else{
-            drawLine(
-                    canvas,
-                    false,
+            canvas.drawLine(
+                    wlength / 2,
+                    hlength / 2,
                     getEndx(),
-                    getEndy());
+                    getEndy(),
+                    linePaint);
         }
 
     }
 
-    private void drawLine(Canvas canvas,boolean flag,float endx,float endy) {
-        if (flag) {
-            //画分针
-            canvas.drawLine(
-                    wlength / 2,
-                    hlength / 2,
-                    endx,
-                    endy,
-                    linePaint);
-            postInvalidate();
-        }else{
-            canvas.drawLine(
-                    wlength / 2,
-                    hlength / 2,
-                    endx,
-                    endy,
-                    linePaint);
-        }
-
+    private float getProportion(float endx, float endy) {
+        float x1 = wlength / 2;
+        float y1 = hlength / 2;
+        double distance = Math.sqrt(((endy - y1) * (endy - y1) + (endx - x1) * (endx - x1)));
+        return 1- (inerd / (2 * (float)distance));
     }
 
     @Override
@@ -227,6 +215,12 @@ public class ClockTime extends View{
                 float y = event.getRawY();
                 Log.e("x",x + " ");
                 Log.e("y", y + " ");
+                Log.e("wlength", wlength / 2 + "");
+                Log.e("hlength", hlength / 2 + "");
+                float proportion = getProportion(x, y);
+                Log.e("proportion", proportion + " ");
+                x = (x - wlength / 2) * proportion;
+                y = (y - hlength / 2) * proportion;
                 setEndx(x);
                 setEndy(y);
                 postInvalidate();
