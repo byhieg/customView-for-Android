@@ -27,6 +27,8 @@ public class ClockTime extends View {
     private float endx, endy;
     private double ratio;
     public static final double PI = Math.PI;
+    private boolean isDrawMinute = false;
+
 
     private double distance;
 
@@ -172,24 +174,7 @@ public class ClockTime extends View {
                     textPaint);
             canvas.restore();
         }
-        //画分钟的竖线
-//        for (int i = 0; i < 60; i++) {
-//            canvas.save();
-//            canvas.rotate(
-//                    -6 * i,
-//                    wlength / 2,
-//                    hlength / 2);
-//            if (i % 5 != 0) {
-//                canvas.drawLine(
-//                        wlength / 2,
-//                        (float) (hlength / 2 - inerd * 0.6),
-//                        wlength / 2,
-//                        (float) (hlength / 2 - inerd * 0.65),
-//                        lPaint
-//                );
-//            }
-//            canvas.restore();
-//        }
+
 //        //画时针
 //        canvas.drawLine(
 //                wlength / 2,
@@ -197,25 +182,38 @@ public class ClockTime extends View {
 //                wlength / 2,
 //                (float) (hlength / 2 - 0.2 * outd),
 //                linePaint);
+        if(!isDrawMinute){
+            if (getEndx() != 0.0 || getEndy() != 0.0) {
+                drawHourHand(
+                        canvas,
+                        false,
+                        getEndx(),
+                        getEndy()
+                );
+                canvas.drawText(
+                        getHour(getAngle(getEndx(),getEndy())),
+                        wlength / 2,
+                        hlength / 2 - outd / 2 - 20,
+                        timePaint);
+            }else{
+                drawHourHand(
+                        canvas,
+                        false,
+                        wlength / 2 + outd / 2 - 100,
+                        hlength / 2);
+            }
 
-        if (getEndx() != 0.0 || getEndy() != 0.0) {
-            drawLine(
-                    canvas,
-                    false,
-                    getEndx(),
-                    getEndy()
-            );
-            canvas.drawText(
-                    getTime(getAngle(getEndx(),getEndy())),
-                            wlength / 2,
-                            hlength / 2 - outd / 2 - 20,
-                            timePaint);
         }else{
-            drawLine(
+            drawMinuteHand(
                     canvas,
-                    false,
-                    wlength / 2 + outd / 2 - 100,
-                    hlength / 2);
+                    getEndx(),
+                    getEndy());
+
+            canvas.drawText(
+                    getMinute(getAngle(getEndx(),getEndy())),
+                    wlength / 2,
+                    hlength / 2 - outd / 2 - 20,
+                    timePaint);
         }
 
 
@@ -232,7 +230,7 @@ public class ClockTime extends View {
         return Math.acos(result) * 180 / PI;
     }
 
-    private String getTime(Double angle) {
+    private String getHour(Double angle) {
         boolean flag = true;
         if(getEndx() > wlength / 2){
             flag = true;
@@ -271,7 +269,22 @@ public class ClockTime extends View {
         }
         return null;
     }
-    private void drawLine(Canvas canvas, boolean flag, float endx, float endy) {
+
+
+    private String getMinute(Double angle) {
+        boolean flag = true;
+        if(getEndx() > wlength / 2){
+            flag = true;
+        }else{
+            flag = false;
+        }
+        if (flag) {
+            return (int)(angle / 6) + "";
+        }else{
+            return (60 - (int)(angle / 6)) + "";
+        }
+    }
+    private void drawHourHand(Canvas canvas, boolean flag, float endx, float endy) {
         if (flag) {
             //画分针
             canvas.drawLine(
@@ -285,12 +298,41 @@ public class ClockTime extends View {
             canvas.drawLine(
                     wlength / 2,
                     hlength / 2,
-                    getEndx(),
-                    getEndy(),
+                    endx,
+                    endy,
                     linePaint);
         }
 
     }
+
+    private void drawMinuteHand(Canvas canvas, float endx, float endy) {
+        //画分钟的竖线
+        for (int i = 0; i < 60; i++) {
+            canvas.save();
+            canvas.rotate(
+                    -6 * i,
+                    wlength / 2,
+                    hlength / 2);
+            if (i % 5 != 0) {
+                canvas.drawLine(
+                        wlength / 2,
+                        (float) (hlength / 2 - inerd * 0.6),
+                        wlength / 2,
+                        (float) (hlength / 2 - inerd * 0.65),
+                        lPaint
+                );
+            }
+            canvas.restore();
+        }
+        canvas.drawLine(
+                wlength / 2,
+                hlength / 2,
+                endx,
+                getEndy(),
+                linePaint);
+    }
+
+
 
 
 
@@ -319,24 +361,50 @@ public class ClockTime extends View {
 //                break;
 //
             case MotionEvent.ACTION_MOVE:
-                float x = event.getX();
-                float y = event.getY();
+                if (isDrawMinute) {
+                    float xu = event.getX();
+                    float yu = event.getY();
 
-                distance = Math.sqrt(
-                        (x - wlength / 2) * (x - wlength / 2) +
-                                (y - hlength / 2) * (y - hlength / 2));
+                    distance = Math.sqrt(
+                            (xu - wlength / 2) * (xu - wlength / 2) +
+                                    (yu - hlength / 2) * (yu - hlength / 2));
 
-                ratio = (inerd / 2) / (distance - inerd / 2);
-                x = (float)((wlength / 2 + ratio * x) / (1 + ratio));
-                y = (float)((hlength / 2 + ratio * y) / (1 + ratio));
+                    ratio = (inerd / 2) / (distance - inerd / 2);
+                    xu = (float) ((wlength / 2 + ratio * xu) / (1 + ratio));
+                    yu = (float) ((hlength / 2 + ratio * yu) / (1 + ratio));
+                    setEndx(xu);
+                    setEndy(yu);
+                    postInvalidate();
+                }else{
+                    float x = event.getX();
+                    float y = event.getY();
+
+                    distance = Math.sqrt(
+                            (x - wlength / 2) * (x - wlength / 2) +
+                                    (y - hlength / 2) * (y - hlength / 2));
+
+                    ratio = (inerd / 2) / (distance - inerd / 2);
+                    x = (float)((wlength / 2 + ratio * x) / (1 + ratio));
+                    y = (float)((hlength / 2 + ratio * y) / (1 + ratio));
 //                Log.e("x", x + " ");
 //                Log.e("y", y + " ");
 //                Log.e("wlength", wlength / 2 + "");
 //                Log.e("hlength", hlength / 2 + "");
-                setEndx(x);
-                setEndy(y);
+                    setEndx(x);
+                    setEndy(y);
+                    postInvalidate();
+                    Log.e("Angle", getAngle(x, y) + "");
+                }
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if (isDrawMinute) {
+                    isDrawMinute = false;
+                }else{
+                    isDrawMinute = true;
+                }
                 postInvalidate();
-                Log.e("Angle", getAngle(x, y) + "");
                 break;
         }
         return true;
