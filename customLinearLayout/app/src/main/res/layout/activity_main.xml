@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.byhieg.customlinearlayoutdemo.MainActivity">
+
+    <cn.byhieg.customlinearlayoutdemo.MyTabLayout
+        android:id="@+id/myTab_layout"
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="56dp"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/myViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/myTab_layout"
+        android:layout_alignParentStart="true">
+    </android.support.v4.view.ViewPager>
+
+
+</RelativeLayout>
