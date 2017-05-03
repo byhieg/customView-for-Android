@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string-array name="date">
+        <item>艾瑞莉娅</item>
+        <item>沃里克</item>
+        <item>厄运晓姐</item>
+        <item>库奇</item>
+        <item>布兰德</item>
+        <item>阿卡丽</item>
+        <item>卡尔玛</item>
+        <item>李青</item>
+        <item>凯南</item>
+        <item>盖伦</item>
+        <item>艾希 </item>
+        <item>泰达米尔</item>
+        <item>塔里克</item>
+        <item>维迦</item>
+        <item>贾克斯</item>
+        <item>薇恩</item>
+        <item>莫甘娜</item>
+        <item>玛尔扎哈</item>
+        <item>基兰</item>
+        <item>兰博</item>
+        <item>特朗德尔</item>
+        <item>辛吉德</item>
+        <item>斯维因</item>
+        <item>卡西奥佩娅</item>
+        <item>卡尔萨斯</item>
+        <item>安妮</item>
+        <item>凯特琳</item>
+        <item>伊芙琳</item>
+        <item>图奇</item>
+        <item>凯尔</item>
+        <item>奥拉夫</item>
+        <item>阿木木</item>
+        <item>加里奥</item>
+        <item>魔腾</item>
+        <item>弗拉基米尔</item>
+        <item>希维尔</item>
+        <item>蒙多医生</item>
+        <item>潘森</item>
+        <item>古拉加斯</item>
+        <item>#金克丝</item>
+        <item>$嘉文四世$</item>
+        <item>SORAKA</item>
+        <item>~崔斯塔纳</item>
+    </string-array>
+
+</resources>
